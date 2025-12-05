@@ -59,6 +59,11 @@ fun IntRange.overlap(other: IntRange): IntRange? {
     return max(first, other.first)..min(last, other.last)
 }
 
+fun IntRange.join(other: IntRange): IntRange? {
+    if (!hasOverlap(other)) return null
+    return min(first, other.first)..max(last, other.last)
+}
+
 fun IntRange.contains(other: IntRange): Boolean {
     return other.first >= first && other.last <= last
 }
@@ -94,6 +99,11 @@ fun LongRange.hasOverlap(other: LongRange): Boolean {
 fun LongRange.overlap(other: LongRange): LongRange? {
     if (!hasOverlap(other)) return null
     return max(first, other.first)..min(last, other.last)
+}
+
+fun LongRange.join(other: LongRange): LongRange? {
+    if (!hasOverlap(other)) return null
+    return min(first, other.first)..max(last, other.last)
 }
 
 fun LongRange.contains(other: LongRange): Boolean {
@@ -190,7 +200,7 @@ fun <T> getPermutations(
     options: List<T>,
     size: Int = options.size,
     position: Int = 0,
-    cache: MutableMap<String, List<List<T>>> = mutableMapOf()
+    cache: MutableMap<String, List<List<T>>> = mutableMapOf(),
 ): List<List<T>> {
     if (position >= size || options.isEmpty()) {
         return listOf(emptyList())
@@ -261,7 +271,7 @@ fun <T> getCombinations(
     options: List<T>,
     onNextCombination: (List<T>) -> Unit,
     earlyTermination: (List<T>) -> Boolean = { _ -> false },
-    prefix: List<T> = emptyList()
+    prefix: List<T> = emptyList(),
 ) {
     if (earlyTermination(prefix)) {
         return

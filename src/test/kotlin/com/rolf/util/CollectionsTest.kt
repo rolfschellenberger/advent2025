@@ -210,6 +210,16 @@ class CollectionsTest {
     }
 
     @Test
+    fun testIntRangeUnion() {
+        assertEquals(1..10, (1..8).join(5..10))
+        assertEquals(1..10, (5..10).join(1..8))
+        assertEquals(1..10, (1..5).join(5..10))
+        assertEquals(1..15, (1..15).join(5..8))
+        assertEquals(1..15, (5..8).join(1..15))
+        assertNull((5..8).join(9..15))
+    }
+
+    @Test
     fun testIntRangeContains() {
         assertTrue((1..6).contains(1..3))
         assertTrue((1..6).contains(2..6))
@@ -282,6 +292,16 @@ class CollectionsTest {
         assertEquals(5L..8, (1L..15).overlap(5L..8))
         assertEquals(5L..8, (5L..8).overlap(1L..15))
         assertNull((5L..8).overlap(9L..15))
+    }
+
+    @Test
+    fun testLongRangeJoin() {
+        assertEquals(1L..10, (1L..8).join(5L..10))
+        assertEquals(1L..10, (5L..10).join(1L..8))
+        assertEquals(1L..10, (1L..5).join(5L..10))
+        assertEquals(1L..15, (1L..15).join(5L..8))
+        assertEquals(1L..15, (5L..8).join(1L..15))
+        assertNull((5L..8).join(9L..15))
     }
 
     @Test
