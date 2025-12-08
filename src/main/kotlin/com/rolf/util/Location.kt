@@ -1,9 +1,6 @@
 package com.rolf.util
 
-import kotlin.math.abs
-import kotlin.math.cos
-import kotlin.math.round
-import kotlin.math.sin
+import kotlin.math.*
 
 open class Location(val x: Int, val y: Int, val z: Int) : Comparable<Location> {
 
@@ -32,6 +29,14 @@ open class Location(val x: Int, val y: Int, val z: Int) : Comparable<Location> {
         return 0L + abs(x - other.x) + abs(y - other.y) + abs(z - other.z)
     }
 
+    fun straightLineDistance(other: Location): Double {
+        return sqrt(
+            (x - other.x).toDouble().pow(2.0) +
+                    (y - other.y).toDouble().pow(2.0) +
+                    (z - other.z).toDouble().pow(2.0)
+        )
+    }
+
     fun getNeighbours(): List<Location> {
         return listOf(
             Location(x + 1, y, z),
@@ -45,7 +50,7 @@ open class Location(val x: Int, val y: Int, val z: Int) : Comparable<Location> {
 
     fun findPath(
         to: Location,
-        notAllowedLocations: Set<Location> = emptySet()
+        notAllowedLocations: Set<Location> = emptySet(),
     ): List<Location> {
         val paths: ArrayDeque<List<Location>> = ArrayDeque()
         val seen: MutableSet<Location> = mutableSetOf(this)
