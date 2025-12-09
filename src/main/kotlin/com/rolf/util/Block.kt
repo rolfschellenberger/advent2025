@@ -14,4 +14,8 @@ data class Block(val x: IntRange, val y: IntRange) {
         }
         return result
     }
+
+    fun overlaps(block: Block): Boolean {
+        return x.hasOverlap(block.x) && y.hasOverlap(block.y)
+    }
 }

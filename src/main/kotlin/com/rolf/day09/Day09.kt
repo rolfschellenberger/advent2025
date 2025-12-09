@@ -52,10 +52,10 @@ class Solve : Day() {
 
     private fun hasNoBordersInside(
         block: Block,
-        borders: Set<Point>,
+        borders: Set<Block>,
     ): Boolean {
         for (border in borders) {
-            if (block.contains(border)) {
+            if (block.overlaps(border)) {
                 return false
             }
         }
@@ -69,19 +69,16 @@ class Solve : Day() {
         }
     }
 
-    private fun parseBorders(points: List<Point>): Set<Point> {
-        val borders = mutableSetOf<Point>()// Block?
+    private fun parseBorders(points: List<Point>): Set<Block> {
+        val borders = mutableSetOf<Block>()
         for ((from, to) in points.zipWithNext() + listOf(points.last() to points.first())) {
             val minX = minOf(from.x, to.x)
             val maxX = maxOf(from.x, to.x)
             val minY = minOf(from.y, to.y)
             val maxY = maxOf(from.y, to.y)
-            for (x in minX..maxX) {
-                for (y in minY..maxY) {
-//                    println("x: $x, y: $y")
-                    borders.add(Point(x, y))
-                }
-            }
+            borders.add(
+                Block(minX..maxX, minY..maxY)
+            )
         }
         return borders
     }
